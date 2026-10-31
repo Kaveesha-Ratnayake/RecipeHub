@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+const base='http://127.0.0.1:4000/api';
+const email=`recipehub-test-${Date.now()}@example.test`;
+const call=async(path,method='GET',body,cookie)=>{const r=await fetch(base+path,{method,headers:{...(body?{'Content-Type':'application/json'}:{}),...(cookie?{Cookie:cookie}:{})},body:body?JSON.stringify(body):undefined});const text=await r.text();return{status:r.status,data:text&&r.headers.get('content-type')?.includes('json')?JSON.parse(text):text,cookie:r.headers.get('set-cookie')?.split(';')[0]};};
+const signup=await call('/auth/register','POST',{name:'Integration Test',email,password:'Test-pass-4782'});assert.equal(signup.status,201);const cookie=signup.cookie;
+assert.equal((await call('/auth/me','GET',null,cookie)).data.user.email,email);
+assert.equal((await call('/auth/login','POST',{email,password:'wrong-password'})).status,401);
+const login=await call('/auth/login','POST',{email,password:'Test-pass-4782'});assert.equal(login.status,200);
+const recipe={title:'Integration test recipe',category:'Dinner',time:20,servings:2,ingredients:['Rice'],instructions:['Cook rice.']};
+assert.equal((await call('/recipes','POST',recipe)).status,401);
+const created=await call('/recipes','POST',recipe,cookie);assert.equal(created.status,201);assert.equal(created.data.authorName,'Integration Test');assert.equal(created.data.owner,signup.data.user.id);const id=created.data._id;
+assert((await call('/recipes')).data.some(r=>r._id===id&&r.authorName==='Integration Test'&&r.owner===signup.data.user.id));
+assert.equal((await call('/recipes/'+id,'PUT',{time:25},cookie)).data.time,25);
+assert.equal((await call('/recipes/'+id,'PUT',{time:-1},cookie)).status,400);
+assert.equal((await call('/recipes/'+id,'DELETE',null,cookie)).status,204);
+assert.equal((await call('/auth/logout','POST',null,cookie)).status,204);
+assert.equal((await call('/auth/me','GET',null,cookie)).status,401);
+// Remove only the account and remaining session created by this test run.
+const {default:mongoose}=await import('mongoose');await mongoose.connect(process.env.MONGODB_URI);const user=await mongoose.connection.collection('users').findOne({email});if(user){await mongoose.connection.collection('sessions').deleteMany({user:user._id});await mongoose.connection.collection('users').deleteOne({_id:user._id,email});}await mongoose.disconnect();
+console.log('PASS: registration, login, session, unauthorized write, persistent recipe CRUD, validation, logout.');

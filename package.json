@@ -1,0 +1,25 @@
+{
+  "name": "recipehub",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite frontend --host 127.0.0.1",
+    "build": "vite build frontend",
+    "server": "node --env-file=backend/.env backend/server.js",
+    "db": "node scripts/mongodb.js",
+    "db:seed": "node --env-file=backend/.env scripts/seed.js",
+    "test:api": "node --env-file=backend/.env scripts/smoke-test.js"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "express": "^5.0.0",
+    "mongoose": "^8.0.0",
+    "cors": "^2.8.5",
+    "lucide-react": "^0.468.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

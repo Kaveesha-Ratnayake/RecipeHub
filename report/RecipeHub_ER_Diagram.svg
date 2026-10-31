@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1530" viewBox="0 0 1800 1530">
+<rect width="100%" height="100%" fill="white"/>
+<text x="900.0" y="57.37" font-family="Times New Roman" font-size="39" font-weight="bold" text-anchor="middle" fill="#17232c">RecipeHub Database ER Diagram</text>
+<text x="900.0" y="100.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="middle" fill="#17232c">MongoDB collections and logical relationships</text>
+<polyline points="680,230 1080,230" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="705" y="212.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">1</text>
+<text x="1005" y="212.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">0..*</text>
+<text x="875" y="267.75" font-family="Times New Roman" font-size="25" font-weight="normal" text-anchor="middle" fill="#17232c">owns</text>
+<polyline points="375,395 375,600" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="393" y="473.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">1</text>
+<text x="393" y="577.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">0..*</text>
+<text x="420" y="515.75" font-family="Times New Roman" font-size="25" font-weight="normal" text-anchor="start" fill="#17232c">has sessions</text>
+<polyline points="680,375 850,375 850,965 1080,965" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="700" y="359.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">1</text>
+<text x="1002" y="945.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">0..*</text>
+<text x="875" y="942.75" font-family="Times New Roman" font-size="25" font-weight="normal" text-anchor="start" fill="#17232c">saves</text>
+<polyline points="1400,611 1400,870" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="1418" y="728.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">1</text>
+<text x="1418" y="845.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">0..*</text>
+<text x="1438" y="785.75" font-family="Times New Roman" font-size="25" font-weight="normal" text-anchor="start" fill="#17232c">is saved in</text>
+<polyline points="80,285 30,285 30,1320 650,1320" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="42" y="322.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">1</text>
+<text x="565" y="1299.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">0..*</text>
+<text x="290" y="1297.75" font-family="Times New Roman" font-size="25" font-weight="normal" text-anchor="start" fill="#17232c">submits</text>
+<polyline points="1720,400 1770,400 1770,1320 1250,1320" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="1735" y="442.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">1</text>
+<text x="1270" y="1299.41" font-family="Times New Roman" font-size="27" font-weight="normal" text-anchor="start" fill="#17232c">0..*</text>
+<text x="1470" y="1297.75" font-family="Times New Roman" font-size="25" font-weight="normal" text-anchor="start" fill="#17232c">receives</text>
+<rect x="80" y="130" width="600" height="265" fill="white" stroke="#485864" stroke-width="3"/><rect x="82" y="132" width="596" height="58" fill="#e5ebf0"/>
+<text x="380.0" y="170.73" font-family="Times New Roman" font-size="31" font-weight="bold" text-anchor="middle" fill="#17232c">User  |  users</text>
+<polyline points="80,191 680,191" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="100" y="227.57999999999998" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">_id : ObjectId  [PK]</text>
+<text x="100" y="263.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">name : String</text>
+<text x="100" y="299.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">email : String  [unique]</text>
+<text x="100" y="335.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">passwordHash : String</text>
+<text x="100" y="371.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">salt : String</text>
+<rect x="1080" y="130" width="640" height="481" fill="white" stroke="#485864" stroke-width="3"/><rect x="1082" y="132" width="636" height="58" fill="#e5ebf0"/>
+<text x="1400.0" y="170.73" font-family="Times New Roman" font-size="31" font-weight="bold" text-anchor="middle" fill="#17232c">Recipe  |  recipes</text>
+<polyline points="1080,191 1720,191" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="1100" y="227.57999999999998" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">_id : ObjectId  [PK]</text>
+<text x="1100" y="263.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">owner : ObjectId  [reference → User]</text>
+<text x="1100" y="299.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">title : String</text>
+<text x="1100" y="335.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">category : String  [enum]</text>
+<text x="1100" y="371.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">time : Number  [1–1440]</text>
+<text x="1100" y="407.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">servings : Number  [1–100]</text>
+<text x="1100" y="443.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">description : String</text>
+<text x="1100" y="479.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">image : String  [URL]</text>
+<text x="1100" y="515.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">ingredients : String[]</text>
+<text x="1100" y="551.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">instructions : String[]</text>
+<text x="1100" y="587.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">createdAt, updatedAt : Date</text>
+<rect x="80" y="600" width="600" height="229" fill="white" stroke="#485864" stroke-width="3"/><rect x="82" y="602" width="596" height="58" fill="#e5ebf0"/>
+<text x="380.0" y="640.73" font-family="Times New Roman" font-size="31" font-weight="bold" text-anchor="middle" fill="#17232c">Session  |  sessions</text>
+<polyline points="80,661 680,661" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="100" y="697.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">_id : ObjectId  [PK]</text>
+<text x="100" y="733.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">digest : String  [unique]</text>
+<text x="100" y="769.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">user : ObjectId  [reference → User]</text>
+<text x="100" y="805.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">expires : Date  [TTL index]</text>
+<rect x="1080" y="870" width="640" height="229" fill="white" stroke="#485864" stroke-width="3"/><rect x="1082" y="872" width="636" height="58" fill="#e5ebf0"/>
+<text x="1400.0" y="910.73" font-family="Times New Roman" font-size="31" font-weight="bold" text-anchor="middle" fill="#17232c">Favourite  |  favourites</text>
+<polyline points="1080,931 1720,931" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="1100" y="967.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">_id : ObjectId  [PK]</text>
+<text x="1100" y="1003.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">user : ObjectId  [reference → User]</text>
+<text x="1100" y="1039.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">recipe : ObjectId  [reference → Recipe]</text>
+<text x="1100" y="1075.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">createdAt, updatedAt : Date</text>
+<rect x="650" y="1220" width="600" height="229" fill="white" stroke="#485864" stroke-width="3"/><rect x="652" y="1222" width="596" height="58" fill="#e5ebf0"/>
+<text x="950.0" y="1260.73" font-family="Times New Roman" font-size="31" font-weight="bold" text-anchor="middle" fill="#17232c">Rating  |  ratings</text>
+<polyline points="650,1281 1250,1281" fill="none" stroke="#485864" stroke-width="3"/>
+<text x="670" y="1317.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">_id : ObjectId  [PK]</text>
+<text x="670" y="1353.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">user : ObjectId  [reference → User]</text>
+<text x="670" y="1389.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">recipe : ObjectId  [reference → Recipe]</text>
+<text x="670" y="1425.58" font-family="Times New Roman" font-size="26" font-weight="normal" text-anchor="start" fill="#17232c">value : Number  [integer 1–5]</text>
+<text x="80" y="1130.75" font-family="Times New Roman" font-size="25" font-weight="normal" text-anchor="start" fill="#17232c">Favourite and Rating each have a unique compound index on (user, recipe).</text>
+<text x="80" y="1170.75" font-family="Times New Roman" font-size="25" font-weight="normal" text-anchor="start" fill="#17232c">1 = one    0..* = zero or many    PK = document identifier</text>
+<text x="80" y="1479.92" font-family="Times New Roman" font-size="24" font-weight="normal" text-anchor="start" fill="#17232c">References are logical links; MongoDB does not enforce foreign keys. Legacy recipes may have no owner.</text>
+</svg>

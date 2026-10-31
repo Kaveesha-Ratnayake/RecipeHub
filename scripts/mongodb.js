@@ -1,0 +1,11 @@
+import {spawn} from 'node:child_process';
+import {existsSync,mkdirSync,readdirSync} from 'node:fs';
+import {resolve,join} from 'node:path';
+const root=resolve('.local/mongodb');
+const folder=existsSync(root)?readdirSync(root).find(n=>existsSync(join(root,n,'bin','mongod.exe'))):null;
+if(!folder)throw Error('Local MongoDB is not installed in .local/mongodb.');
+const db=resolve('.local/data');mkdirSync(db,{recursive:true});
+const child=spawn(join(root,folder,'bin','mongod.exe'),['--dbpath',db,'--bind_ip','127.0.0.1','--port','27017'],{stdio:'inherit',windowsHide:true});
+child.on('error',e=>{console.error(e.message);process.exitCode=1;});
+child.on('exit',code=>{process.exitCode=code||0;});
+process.on('SIGINT',()=>child.kill('SIGINT'));
