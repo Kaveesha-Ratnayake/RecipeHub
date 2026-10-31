@@ -1,58 +1,212 @@
 # RecipeHub
 
-A warm recipe discovery and management interface built with React, Vite, Express and MongoDB.
+RecipeHub is a full-stack recipe discovery and management web application developed using **React, Vite, Node.js, Express.js, and MongoDB**.
 
-## Run the frontend
+The application allows users to explore recipes, search for cooking ideas, manage their own recipes, save favourites, rate recipes, and upload recipe photos. It provides a user-friendly interface with persistent database storage.
 
-1. Install Node.js and run `npm install` in this folder.
-2. Run `npm run dev` and open http://127.0.0.1:5173.
-3. Run `npm run build` for a production frontend build.
+## 1. Technologies Used
 
-Without a running API, the frontend uses six example recipes and stores changes in this browser's localStorage. This is a design preview, not database persistence.
+**Frontend**
+- React.js
+- Vite
+- HTML, CSS, and JavaScript
 
-## Connect MongoDB
+**Backend**
+- Node.js
+- Express.js
+- RESTful APIs
 
-1. Start a local MongoDB instance, or use your MongoDB Atlas connection string.
-2. Copy `backend/.env.example` to `backend/.env` and set MONGODB_URI. Never commit credentials.
-3. Run `npm run server` in a second terminal, then reload the frontend.
-4. The API supports GET/POST /api/recipes and PUT/DELETE /api/recipes/:id. With the API connected, recipes persist in MongoDB. Demo recipes are not automatically inserted into the database.
+**Database**
+- MongoDB
 
-## Current scope and limitations
+**Development Tools**
+- Visual Studio Code
+- Git and GitHub
+- npm
 
-Search title, description and ingredients; filter categories; sort; save favourites; open recipe details; and add, edit or delete recipes with confirmation. Orange primary actions, cream backgrounds, blush pink accents and green typography are defined in frontend/style.css.
+## 2. Main Features
 
-Authentication and ownership authorization are not implemented yet. The API is intended for local development only; do not expose it publicly before adding authentication. The My recipes flag currently belongs to the frontend session; API-backed ownership still needs user accounts. Photos load from Unsplash and fonts from Google Fonts, requiring internet access.
+### Recipe Management
+- Create new recipes with ingredients, descriptions, and cooking instructions.
+- View recipes and their details.
+- Edit existing recipes.
+- Delete recipes with confirmation.
+- Search recipes by title, description, or ingredients.
+- Filter recipes by category and sort results.
 
-## Rubric work remaining
+### User Authentication
+- Register using a name, email address, and password.
+- Log in and log out securely.
+- Passwords are protected using salted scrypt hashes.
+- Sessions use HttpOnly and SameSite cookies.
+- Users can edit and delete only recipes they own.
 
-Implement register/login and server-side ownership checks, verify CRUD against a real MongoDB instance, prepare the ERD/report and record the demonstration. Understand and explain all submitted code during the viva.
+### Favourites
+- Save favourite recipes.
+- View and manage saved favourites.
+- Store favourites separately for each user in MongoDB.
 
-## User accounts
+### Ratings
+- Rate recipes from 1 to 5 stars.
+- Update previously submitted ratings.
+- View average ratings and rating counts.
+- Store ratings persistently in MongoDB.
 
-Use the sidebar's Log in / Register link to open the account page. Registration requires a name, email and password of at least 8 characters. The backend must be running with MongoDB connected; there are no fake demo logins. Passwords use salted scrypt hashes. Sessions last one day and use HttpOnly, SameSite cookies; logout revokes the session. Recipe writes require authentication and edit/delete operations check the recipe owner. Use the documented 127.0.0.1 frontend address for cookies and CORS. Set NODE_ENV=production and HTTPS before production use. Existing recipes without an owner remain read-only.
+### Recipe Photos
+- Add recipe photos using an image URL.
+- Upload JPEG, PNG, or WebP images up to 5 MB.
+- Store uploaded images locally.
 
-The authentication and ownership implementation supersedes the earlier authentication limitation above. End-to-end database validation remains pending until MongoDB is configured.
+### User Interface
+- Responsive recipe browsing interface.
+- Recipe cards and detailed recipe views.
+- Search, category filtering, and sorting.
+- Consistent styling and navigation.
 
-## Local MongoDB setup (Windows)
+## 3. Project Structure
 
-The official MongoDB Community server is installed in ignored `.local/mongodb`; database files live in ignored `.local/data`. Keep that data folder to preserve your users and recipes. backend/.env contains the local connection string and is ignored by Git.
+```text
+RecipeHub/
+├── backend/
+├── frontend/
+├── report/
+├── scripts/
+├── .gitignore
+├── README.md
+├── package.json
+└── package-lock.json
+```
 
-Start these in separate terminals from the project folder:
+## 4. Installation and Setup
 
-1. `npm run db` — local database, bound only to 127.0.0.1:27017.
-2. `npm run server` — API on port 4000.
-3. `npm run dev` — frontend.
+### Prerequisites
 
-Run `npm run db:seed` once for starter recipes (only inserts into an empty collection). Run `npm run test:api` for registration, sessions, authorization, CRUD and validation checks. The test removes only the records it creates. API-backed recipes and user accounts persist on disk; favourites and ratings currently remain browser-local. Local database binaries are not included in Git, so another computer needs its own MongoDB installation or Atlas URI.
+- Node.js and npm
+- MongoDB Community Server or MongoDB Atlas
+- A modern web browser
 
-## Account favourites
+### Step 1: Install Dependencies
 
-Favourites now use authenticated GET /api/favourites and PUT/DELETE /api/favourites/:id. MongoDB stores each user/recipe pair with a unique compound index. Only the signed-in user's favourites are returned or changed. The previous shared browser favourites are deliberately not migrated because their owner is unknown. Ratings remain browser-local. Verify account separation with `node --env-file=backend/.env scripts/test-favourites.js`.
+Open a terminal in the RecipeHub project directory and run:
 
-## Account ratings and recipe photos
+```bash
+npm install
+```
 
-Ratings now persist in MongoDB with one rating per user/recipe pair. Logged-in users can set or update a 1–5 rating. Everyone can see the aggregate average and count; the signed-in user's own value is shown separately. Shared legacy browser ratings are not migrated because their owner is unknown.
+### Step 2: Configure MongoDB
 
-Recipe forms accept either an image URL or a computer upload. Uploads require authentication, accept JPEG/PNG/WebP up to 5 MB, and are stored under ignored `.local/uploads`. Keep this directory with the database when backing up. Existing upload URLs continue to work when editing. This local setup serves uploaded photos from http://127.0.0.1:4000/uploads; production hosting needs a configured public URL or object storage.
+Copy `backend/.env.example` to `backend/.env` and configure the `MONGODB_URI` connection string.
 
-Run `node --env-file=backend/.env scripts/test-ratings-uploads.js` to verify rating isolation, averages, repeat rating updates, login persistence, image type/size validation, and URL/uploaded image saves. The test cleans up its temporary data and uploaded file.
+Never upload `.env` files containing database credentials to GitHub.
+
+### Step 3: Start MongoDB
+
+For the documented local Windows setup, run:
+
+```bash
+npm run db
+```
+
+The local database runs on `127.0.0.1:27017`.
+
+Alternatively, configure a MongoDB Atlas connection.
+
+### Step 4: Start the Backend
+
+Open another terminal in the project directory and run:
+
+```bash
+npm run server
+```
+
+The backend API runs on port `4000`.
+
+### Step 5: Start the Frontend
+
+Open another terminal and run:
+
+```bash
+npm run dev
+```
+
+Open the application at:
+
+http://127.0.0.1:5173
+
+### Step 6: Add Starter Recipes (Optional)
+
+```bash
+npm run db:seed
+```
+
+This inserts starter recipes into an empty recipe collection.
+
+## 5. Database and RESTful API
+
+MongoDB is used to store recipe information, user accounts, favourites, and ratings.
+
+The backend provides RESTful API endpoints for recipe management.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/api/recipes` | Retrieve recipes |
+| POST | `/api/recipes` | Create a recipe |
+| PUT | `/api/recipes/:id` | Update a recipe |
+| DELETE | `/api/recipes/:id` | Delete a recipe |
+| GET | `/api/favourites` | Retrieve user favourites |
+| PUT | `/api/favourites/:id` | Save a favourite |
+| DELETE | `/api/favourites/:id` | Remove a favourite |
+
+Recipe modifications require authentication, and editing or deleting a recipe requires ownership authorization.
+
+## 6. Validation and Security
+
+RecipeHub includes the following documented security and validation measures:
+
+- Password hashing using salted scrypt hashes.
+- Session management using HttpOnly and SameSite cookies.
+- Authentication checks for protected operations.
+- Recipe ownership checks for editing and deleting.
+- Image upload restrictions for file type and size.
+- Database-backed storage for user-specific information.
+
+The application is configured for local development. Production deployment requires HTTPS and appropriate production security settings.
+
+## 7. Testing
+
+The project includes scripts for checking API functionality.
+
+**API and CRUD testing**
+
+```bash
+npm run test:api
+```
+
+**Favourites testing**
+
+```bash
+node --env-file=backend/.env scripts/test-favourites.js
+```
+
+**Ratings and uploads testing**
+
+```bash
+node --env-file=backend/.env scripts/test-ratings-uploads.js
+```
+
+These scripts are intended to verify authentication, authorization, CRUD operations, validation, favourites, ratings, and image uploads.
+
+## 8. Current Limitations
+
+- The application is configured primarily for local development.
+- The frontend provides a browser-based preview when the backend is unavailable; this preview does not provide MongoDB persistence.
+- Uploaded images are stored locally and require separate storage configuration for production hosting.
+- External images and Google Fonts may require an internet connection.
+- MongoDB and locally uploaded files must be backed up separately from the GitHub source repository.
+
+## 9. Project Documentation
+
+The `report/` directory contains project documentation and an Entity Relationship Diagram (ERD).
+
+The project is developed as part of the Web Application Development module and demonstrates frontend development, backend API integration, database management, authentication, and CRUD operations.
+
