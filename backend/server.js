@@ -6,7 +6,7 @@ import {favouriteRoutes} from './favourites.js';
 import {ratingRoutes} from './ratings.js';
 import {uploadRoutes} from './uploads.js';
 const app=express();
-app.use(cors({origin:['http://127.0.0.1:5173','http://127.0.0.1:5174'],credentials:true}));
+app.use(cors({origin:['http://127.0.0.1:5173','http://127.0.0.1:5174','http://127.0.0.1:5175'],credentials:true}));
 app.use(express.json({limit:'100kb'}));
 authRoutes(app);
 const schema=new mongoose.Schema({owner:{type:mongoose.Schema.Types.ObjectId,ref:'User'},title:{type:String,required:true,maxlength:120},category:{type:String,enum:['Breakfast','Lunch','Dinner','Dessert','Drinks'],required:true},time:{type:Number,min:1,max:1440,required:true},servings:{type:Number,min:1,max:100,required:true},description:{type:String,maxlength:500},image:{type:String,maxlength:2000},ingredients:{type:[String],validate:v=>v.length>0},instructions:{type:[String],validate:v=>v.length>0}},{timestamps:true});
@@ -25,4 +25,5 @@ app.use((err,req,res,next)=>{if(err.type==='entity.too.large')return res.status(
 if(!process.env.MONGODB_URI)throw new Error('Set MONGODB_URI in backend/.env');
 await mongoose.connect(process.env.MONGODB_URI);
 app.listen(process.env.PORT||4000,()=>console.log('RecipeHub API: http://127.0.0.1:4000'));
+
 

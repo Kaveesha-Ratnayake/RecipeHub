@@ -10,3 +10,14 @@ backend/.env
 dist/
 build/
 coverage/
+
+# Local report rendering and review files
+report/qa/
+
+# Keep Word reports local
+report/*.docx
+
+# Keep locally prepared report assets off GitHub
+report/RecipeHub_ERD_Table_Style.*
+report/create_table_erd.py
+report/finalize_report.py

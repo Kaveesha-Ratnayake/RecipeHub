@@ -4,12 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite frontend --host 127.0.0.1",
+    "dev": "vite frontend --host 127.0.0.1 --port 5173 --strictPort",
     "build": "vite build frontend",
     "server": "node --env-file=backend/.env backend/server.js",
     "db": "node scripts/mongodb.js",
     "db:seed": "node --env-file=backend/.env scripts/seed.js",
-    "test:api": "node --env-file=backend/.env scripts/smoke-test.js"
+    "test:api": "node --env-file=backend/.env scripts/smoke-test.js",
+    "test:favourites": "node --env-file=backend/.env scripts/test-favourites.js",
+    "test:ratings": "node --env-file=backend/.env scripts/test-ratings-uploads.js"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -21,5 +23,8 @@
   },
   "devDependencies": {
     "vite": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

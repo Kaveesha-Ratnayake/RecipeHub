@@ -81,11 +81,18 @@ RecipeHub/
 
 ### Prerequisites
 
-- Node.js and npm
+- Node.js 22 or newer and npm
 - MongoDB Community Server or MongoDB Atlas
 - A modern web browser
 
-### Step 1: Install Dependencies
+### Step 1: Clone and Install Dependencies
+
+```bash
+git clone https://github.com/Kaveesha-Ratnayake/RecipeHub.git
+cd RecipeHub
+```
+
+Then install dependencies:
 
 Open a terminal in the RecipeHub project directory and run:
 
@@ -97,19 +104,25 @@ npm install
 
 Copy `backend/.env.example` to `backend/.env` and configure the `MONGODB_URI` connection string.
 
+For a local database, use:
+
+```env
+PORT=4000
+MONGODB_URI=mongodb://127.0.0.1:27017/recipehub
+```
+
+On Windows PowerShell, copy the example with `Copy-Item backend/.env.example backend/.env`.
 Never upload `.env` files containing database credentials to GitHub.
 
 ### Step 3: Start MongoDB
 
-For the documented local Windows setup, run:
+Choose one option:
 
-```bash
-npm run db
-```
+- **Installed MongoDB Community Server:** start its MongoDB Windows service. If you installed only the binaries, create a data folder and run `mongod --dbpath <absolute-data-folder> --bind_ip 127.0.0.1 --port 27017` using your mongod executable. Keep that terminal open.
+- **Project-local Windows ZIP installation:** extract MongoDB Community Server so that `.local/mongodb/<extracted-folder>/bin/mongod.exe` exists, then run `npm run db`. This creates `.local/data`. The binaries and data are ignored by Git, so a fresh clone does not include them. **Do not run this command if a MongoDB service already uses port 27017.**
+- **MongoDB Atlas:** set your Atlas connection string in `backend/.env`, configure access for your computer, and skip the local database command.
 
-The local database runs on `127.0.0.1:27017`.
-
-Alternatively, configure a MongoDB Atlas connection.
+Keep MongoDB running while using the application.
 
 ### Step 4: Start the Backend
 
@@ -129,6 +142,8 @@ Open another terminal and run:
 npm run dev
 ```
 
+Keep the backend and frontend terminals open. The frontend uses port 5173 and stops with an error if the port is already occupied; use the existing running instance instead of launching duplicates.
+
 Open the application at:
 
 http://127.0.0.1:5173
@@ -139,7 +154,9 @@ http://127.0.0.1:5173
 npm run db:seed
 ```
 
-This inserts starter recipes into an empty recipe collection.
+This inserts starter recipes into an empty recipe collection. Your existing local accounts, recipes and uploaded files are not included in a GitHub clone. Register a new account on a new installation.
+
+If login shows "account service is unavailable", check that MongoDB and `npm run server` are running. Use `http://127.0.0.1:5173` consistently. This repository is source code, not a hosted application; frontend API addresses currently target the local computer.
 
 ## 5. Database and RESTful API
 
@@ -209,4 +226,12 @@ These scripts are intended to verify authentication, authorization, CRUD operati
 The `report/` directory contains project documentation and an Entity Relationship Diagram (ERD).
 
 The project is developed as part of the Web Application Development module and demonstrates frontend development, backend API integration, database management, authentication, and CRUD operations.
+
+
+### Additional setup notes
+
+`npm run db` can use the project-local Windows ZIP binaries, `mongod` on PATH, or an executable specified by the `MONGOD_PATH` environment variable. If port 27017 is already in use, it prints a message rather than launching a duplicate server. This does not prove the process on that port is MongoDB; the backend connection verifies that.
+
+Convenient checks: `npm run test:api`, `npm run test:favourites`, and `npm run test:ratings` (run sequentially while MongoDB and the backend are running).
+
 
